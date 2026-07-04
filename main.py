@@ -1,0 +1,41 @@
+#recibe la aplicación de FastAPI y registra las rutas. También importa desde routes y dependencies, que son los archivos donde se encuentra la lógica de negocio y las dependencias de FastAPI.
+#Aquí casi nunca se escribe lógica de negocio. Su función es crear la aplicación de FastAPI y #registrar las rutas.
+#tambien importa desde routes y dependencies, que son los archivos donde se encuentra la lógica de negocio y las dependencias de FastAPI.
+
+#importaciones
+from fastapi import Depends, FastAPI
+from dependencies import get_current_user
+from database import conexion, cursor
+from schemas import Usuario, Login
+from routes.auth import router as auth_router
+from auth import (
+    hash_password,
+    verify_password,
+    create_access_token,
+    decode_access_token,
+    SECRET_KEY,
+    ALGORITHM
+)
+from routes.users import router as users_router
+
+
+#constantes
+
+
+app = FastAPI()
+
+#registra las rutas de autenticación y usuarios en la aplicación FastAPI
+app.include_router(auth_router)
+app.include_router(users_router)
+
+#endpoints
+#inicio de la API
+@app.get("/")
+def inicio():
+    return {"mensaje": "API funcionando"}
+
+
+
+
+
+
