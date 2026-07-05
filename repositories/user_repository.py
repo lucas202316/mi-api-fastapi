@@ -91,4 +91,16 @@ def update_user(
 
     return cursor.rowcount
 
+def delete_user(db: sqlite3.Connection, user_id: int):
+    cursor = db.cursor()
+
+    cursor.execute("""
+        DELETE FROM usuarios
+        WHERE id = ?
+    """, (user_id,))
+
+    db.commit()
+
+    return cursor.rowcount
+
 

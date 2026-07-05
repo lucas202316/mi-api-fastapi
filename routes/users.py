@@ -64,6 +64,27 @@ def update_user(
             detail="Usuario no encontrado"
         )
 
+@router.delete("/users/{user_id}")
+def delete_user(
+    user_id: int,
+    db: sqlite3.Connection = Depends(get_db)
+):
+    try:
+        user_service.delete_user(
+            db=db,
+            user_id=user_id
+        )
+
+        return {
+            "message": "Usuario eliminado correctamente"
+        }
+
+    except UserNotFoundError:
+        raise HTTPException(
+            status_code=404,
+            detail="Usuario no encontrado"
+        )
+
 
 
 #registro de usuario

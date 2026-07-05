@@ -30,4 +30,15 @@ def update_user(
     if filas_actualizadas == 0:
         raise UserNotFoundError()
 
+def delete_user(
+    db: sqlite3.Connection,
+    user_id: int
+):
+    filas_eliminadas = user_repository.delete_user(
+        db,
+        user_id
+    )
+
+    if filas_eliminadas == 0:
+        raise UserNotFoundError()
     
