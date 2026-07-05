@@ -13,3 +13,7 @@ class Usuario(BaseModel):
 class Login(BaseModel):
    email: str
    password: str
+   
+class UserUpdate(BaseModel):
+    nombre: str
+    email: str

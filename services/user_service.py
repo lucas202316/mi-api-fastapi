@@ -13,3 +13,21 @@ def get_user_by_id(db: sqlite3.Connection, user_id: int):
         raise UserNotFoundError()
 
     return usuario
+
+def update_user(
+    db: sqlite3.Connection,
+    user_id: int,
+    nombre: str,
+    email: str
+):
+    filas_actualizadas = user_repository.update_user(
+        db,
+        user_id,
+        nombre,
+        email
+    )
+
+    if filas_actualizadas == 0:
+        raise UserNotFoundError()
+
+    

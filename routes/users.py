@@ -7,6 +7,7 @@ from exceptions import UserNotFoundError
 from fastapi import APIRouter, Depends
 from services.auth_service import register_user
 from schemas import Usuario
+from schemas import UserUpdate
 from database import get_db
 import sqlite3
 from exceptions import UserAlreadyExistsError
@@ -39,6 +40,29 @@ def get_user_by_id(
             detail="Usuario no encontrado"
         )
 
+@router.put("/users/{user_id}")
+def update_user(
+    user_id: int,
+    datos: UserUpdate,
+    db: sqlite3.Connection = Depends(get_db)
+):
+    try:
+        user_service.update_user(
+            db=db,
+            user_id=user_id,
+            nombre=datos.nombre,
+            email=datos.email
+        )
+
+        return {
+            "message": "Usuario actualizado correctamente"
+        }
+
+    except UserNotFoundError:
+        raise HTTPException(
+            status_code=404,
+            detail="Usuario no encontrado"
+        )
 
 
 

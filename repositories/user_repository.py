@@ -73,4 +73,22 @@ def get_user_by_id(db: sqlite3.Connection, user_id: int):
         "email": usuario[2]
     }
 
+def update_user(
+    db: sqlite3.Connection,
+    user_id: int,
+    nombre: str,
+    email: str
+):
+    cursor = db.cursor()
+
+    cursor.execute("""
+        UPDATE usuarios
+        SET nombre = ?, email = ?
+        WHERE id = ?
+    """, (nombre, email, user_id))
+
+    db.commit()
+
+    return cursor.rowcount
+
 
