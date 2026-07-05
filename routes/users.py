@@ -4,7 +4,9 @@
 from fastapi import APIRouter, Depends
 
 from schemas import Usuario
-from database import conexion, cursor
+from database import get_db
+import sqlite3
+
 from dependencies import get_current_user
 from auth import hash_password
 
@@ -12,11 +14,13 @@ router = APIRouter()
 
 #registro de usuario
 @router.post("/register")
-def register(usuario: Usuario):
+def register(usuario: Usuario,
+             db: sqlite3.Connection = Depends(get_db)):
 
     password_hash = hash_password(usuario.password)
     
     try:
+        cursor = db.cursor()
         cursor.execute(
             """
             INSERT INTO usuarios(nombre, email, password)
@@ -29,7 +33,7 @@ def register(usuario: Usuario):
             )
         )
 
-        conexion.commit()
+        db.commit()
         return {
         "mensaje": "Usuario registrado",
         "password_original": usuario.password,

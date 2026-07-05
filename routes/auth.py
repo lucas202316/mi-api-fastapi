@@ -2,7 +2,9 @@
 from fastapi import APIRouter
 
 from schemas import Login
-from database import cursor
+from fastapi import Depends
+import sqlite3
+from database import get_db
 from auth import (
     verify_password,
     create_access_token
@@ -13,8 +15,10 @@ router = APIRouter()
 
 #login de usuario
 @router.post("/login")
-def login(datos: Login):
+def login(datos: Login,
+          db: sqlite3.Connection = Depends(get_db)):
 
+    cursor = db.cursor()
     cursor.execute(
         "SELECT * FROM usuarios WHERE email = ?",
         (datos.email,)

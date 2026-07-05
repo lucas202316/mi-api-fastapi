@@ -3,11 +3,22 @@
 #Si algún día cambias SQLite por MySQL o PostgreSQL, solamente modificarás este archivo.
 
 import sqlite3
+
 from config import DATABASE_PATH
 
-conexion = sqlite3.connect(
-    DATABASE_PATH,
-    check_same_thread=False
-)
 
-cursor = conexion.cursor()
+def get_db():
+
+    conexion = sqlite3.connect(
+        DATABASE_PATH,
+        check_same_thread=False
+    )
+
+    conexion.row_factory = sqlite3.Row
+
+    try:
+        yield conexion
+
+    finally:
+        conexion.close()
+
