@@ -32,3 +32,26 @@ def create_user(
 
         raise UserAlreadyExistsError()
 
+def get_all_users(db: sqlite3.Connection):
+    cursor = db.cursor()
+
+    cursor.execute("""
+        SELECT id, nombre, email
+        FROM usuarios
+    """)
+
+    usuarios = cursor.fetchall()
+
+    resultado = []
+
+    for usuario in usuarios:
+        resultado.append({
+            "id": usuario[0],
+            "nombre": usuario[1],
+            "email": usuario[2]
+        })
+
+    return resultado
+
+
+

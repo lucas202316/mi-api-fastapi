@@ -10,8 +10,18 @@ from exceptions import UserAlreadyExistsError
 
 from dependencies import get_current_user
 from auth import hash_password
+from services import user_service
 
 router = APIRouter()
+
+#Ahora agregamos el nuevo endpoint.
+@router.get("/users")
+def get_users(
+    db: sqlite3.Connection = Depends(get_db)
+):
+    return user_service.get_all_users(db)
+
+
 
 #registro de usuario
 @router.post("/register")
