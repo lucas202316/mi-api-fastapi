@@ -1,6 +1,9 @@
 #maneja los endpoints de registro de usuarios. Aquí se definen las rutas y la lógica para registrar nuevos usuarios en la aplicación.
 #Aquí van los endpoints de registro
 
+from fastapi import HTTPException
+from exceptions import UserNotFoundError
+
 from fastapi import APIRouter, Depends
 from services.auth_service import register_user
 from schemas import Usuario
@@ -20,6 +23,22 @@ def get_users(
     db: sqlite3.Connection = Depends(get_db)
 ):
     return user_service.get_all_users(db)
+
+#Ahora agregamos el nuevo endpoint.
+@router.get("/users/{user_id}")
+def get_user_by_id(
+    user_id: int,
+    db: sqlite3.Connection = Depends(get_db)
+):
+    try:
+        return user_service.get_user_by_id(db, user_id)
+
+    except UserNotFoundError:
+        raise HTTPException(
+            status_code=404,
+            detail="Usuario no encontrado"
+        )
+
 
 
 
