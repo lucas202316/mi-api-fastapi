@@ -5,29 +5,14 @@ from repositories.user_repository import create_user
 
 
 
-def register_user(
-    usuario: Usuario,
-    db: sqlite3.Connection
-):
+def register_user(usuario, db):
 
     password_hash = hash_password(usuario.password)
 
-    try:
-        create_user(
+    create_user(
         usuario,
         password_hash,
         db
     )
 
-
-        return {
-            "mensaje": "Usuario registrado",
-            "password_original": usuario.password,
-            "password_hasheada": password_hash
-        }
-
-    except UserAlreadyExistsError:
-        return {
-            "mensaje": "El correo electrónico ya está registrado"
-        }
 

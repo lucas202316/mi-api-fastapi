@@ -6,6 +6,7 @@ from services.auth_service import register_user
 from schemas import Usuario
 from database import get_db
 import sqlite3
+from exceptions import UserAlreadyExistsError
 
 from dependencies import get_current_user
 from auth import hash_password
@@ -19,10 +20,23 @@ def register(
     db: sqlite3.Connection = Depends(get_db)
 ):
 
-    return register_user(
-        usuario,
-        db
-    )
+    try:
+
+        register_user(
+            usuario,
+            db
+        )
+
+        return {
+            "mensaje": "Usuario registrado"
+        }
+
+    except UserAlreadyExistsError:
+
+        return {
+            "mensaje": "El correo electrónico ya está registrado"
+        }
+
 
 
 #rura protegida que requiere autenticación
