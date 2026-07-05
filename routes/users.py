@@ -2,7 +2,7 @@
 #Aquí van los endpoints de registro
 
 from fastapi import APIRouter, Depends
-
+from services.auth_service import register_user
 from schemas import Usuario
 from database import get_db
 import sqlite3
@@ -14,33 +14,16 @@ router = APIRouter()
 
 #registro de usuario
 @router.post("/register")
-def register(usuario: Usuario,
-             db: sqlite3.Connection = Depends(get_db)):
+def register(
+    usuario: Usuario,
+    db: sqlite3.Connection = Depends(get_db)
+):
 
-    password_hash = hash_password(usuario.password)
-    
-    try:
-        cursor = db.cursor()
-        cursor.execute(
-            """
-            INSERT INTO usuarios(nombre, email, password)
-            VALUES (?, ?, ?)
-            """,
-            (
-                usuario.nombre,
-                usuario.email,
-                password_hash
-            )
-        )
+    return register_user(
+        usuario,
+        db
+    )
 
-        db.commit()
-        return {
-        "mensaje": "Usuario registrado",
-        "password_original": usuario.password,
-        "password_hasheada": password_hash
-    }
-    except sqlite3.IntegrityError:
-        return {"mensaje": "El correo electrónico ya está registrado"}
 
 #rura protegida que requiere autenticación
 @router.get("/profile")

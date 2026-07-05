@@ -3,20 +3,11 @@
 #tambien importa desde routes y dependencies, que son los archivos donde se encuentra la lógica de negocio y las dependencias de FastAPI.
 
 #importaciones
-from fastapi import Depends, FastAPI
-from dependencies import get_current_user
-from database import conexion, cursor
-from schemas import Usuario, Login
+from fastapi import FastAPI
+
 from routes.auth import router as auth_router
-from auth import (
-    hash_password,
-    verify_password,
-    create_access_token,
-    decode_access_token,
-    SECRET_KEY,
-    ALGORITHM
-)
 from routes.users import router as users_router
+
 
 
 #constantes
