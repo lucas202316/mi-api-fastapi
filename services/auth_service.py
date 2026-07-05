@@ -1,6 +1,8 @@
 import sqlite3
 from schemas import Usuario
 from auth import hash_password
+from repositories.user_repository import create_user
+
 
 
 def register_user(
@@ -11,21 +13,12 @@ def register_user(
     password_hash = hash_password(usuario.password)
 
     try:
-        cursor = db.cursor()
+        create_user(
+        usuario,
+        password_hash,
+        db
+    )
 
-        cursor.execute(
-            """
-            INSERT INTO usuarios(nombre, email, password)
-            VALUES (?, ?, ?)
-            """,
-            (
-                usuario.nombre,
-                usuario.email,
-                password_hash
-            )
-        )
-
-        db.commit()
 
         return {
             "mensaje": "Usuario registrado",
