@@ -29,14 +29,14 @@ def login(datos: Login,
         return {
             "error": "Correo o contraseña incorrectos."
         }
-    password_guardada = usuario[3] 
+    password_guardada = usuario["password"]
     
     if verify_password(
         datos.password,
         password_guardada
     ):
 
-        token = create_access_token(usuario[0])    
+        token = create_access_token(usuario["id"])    
         
         '''datos_token = jwt.decode(
         token,
