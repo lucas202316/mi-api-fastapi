@@ -3,11 +3,10 @@
 #Si algún día cambias SQLite por MySQL o PostgreSQL, solamente modificarás este archivo.
 
 import sqlite3
-
-RUTA_DB = r"C:\Lucas\bbdd\mi_api.db"
+from config import DATABASE_PATH
 
 conexion = sqlite3.connect(
-    RUTA_DB,
+    DATABASE_PATH,
     check_same_thread=False
 )
 

@@ -17,3 +17,10 @@ __pycache__/
 
 # logs
 *.log
+
+# Configuración de PyCharm
+.idea/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db

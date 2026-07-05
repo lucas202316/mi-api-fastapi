@@ -5,10 +5,10 @@
 
 import bcrypt
 from jose import jwt
+from config import SECRET_KEY, ALGORITHM
 
 #constantes
-SECRET_KEY = "mi_clave_secreta"
-ALGORITHM = "HS256"
+
 
 
 def hash_password(password: str) -> str:
