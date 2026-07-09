@@ -5,15 +5,22 @@
 from pydantic import BaseModel
 
 #modelos de datos pydantic
-class Usuario(BaseModel):
+#clase base para los modelos de usuario
+class UsuarioBase(BaseModel):
     nombre: str
     email: str
+
+
+class Usuario(UsuarioBase):
     password: str
+
+
+class UsuarioUpdate(UsuarioBase):
+    pass
+
 
 class Login(BaseModel):
    email: str
    password: str
    
-class UserUpdate(BaseModel):
-    nombre: str
-    email: str
+
