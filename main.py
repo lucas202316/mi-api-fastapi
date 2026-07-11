@@ -7,9 +7,10 @@ from fastapi import FastAPI
 
 from routes.auth import router as auth_router
 from routes.users import router as users_router
-
+from handlers import user_already_exists_handler
 from handlers import user_not_found_handler
 from exceptions import UserNotFoundError
+from exceptions import UserAlreadyExistsError
 
 #constantes
 
