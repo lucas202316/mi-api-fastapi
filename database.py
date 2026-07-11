@@ -14,11 +14,11 @@ def get_db():
         check_same_thread=False
     )
 
-    conexion.row_factory = sqlite3.Row
+    conexion.row_factory = sqlite3.Row #sirve para que el cursor devuelva diccionarios en lugar de tuplas. Así podemos acceder a los datos por nombre de columna en lugar de por índice.
 
     try:
         yield conexion
 
-    finally:
+    finally:#se ejecuta al terminar la conexión con la base de datos pase lo que pase. Se ejecuta siempre.
         conexion.close()
 

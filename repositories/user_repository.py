@@ -89,7 +89,12 @@ def update_user(
 
     db.commit()
 
-    return cursor.rowcount
+    return get_user_by_id(
+        db,
+        user_id
+    )
+
+    
 
 def delete_user(db: sqlite3.Connection, user_id: int):
     cursor = db.cursor()

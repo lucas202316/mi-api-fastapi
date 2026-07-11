@@ -18,9 +18,20 @@ class Usuario(UsuarioBase):
 class UsuarioUpdate(UsuarioBase):
     pass
 
+#response model for user data
+class UsuarioResponse(UsuarioBase):
+    id: int
+
 
 class Login(BaseModel):
    email: str
    password: str
    
 
+#Para documentar correctamente el endpoint de login.
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class MessageResponse(BaseModel):
+    mensaje: str
