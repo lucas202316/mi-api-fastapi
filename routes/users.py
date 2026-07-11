@@ -1,8 +1,7 @@
 #maneja los endpoints de registro de usuarios. Aquí se definen las rutas y la lógica para registrar nuevos usuarios en la aplicación.
 #Aquí van los endpoints de registro
 
-from fastapi import HTTPException
-from exceptions import UserNotFoundError
+
 
 from fastapi import APIRouter, Depends, status
 from services.auth_service import register_user
@@ -31,14 +30,10 @@ def get_user_by_id(
     user_id: int,
     db: sqlite3.Connection = Depends(get_db)
 ):
-    try:
+    
         return user_service.get_user_by_id(db, user_id)
 
-    except UserNotFoundError:
-        raise HTTPException(
-            status_code=404,
-            detail="Usuario no encontrado"
-        )
+    
 
 @router.put(
     "/users/{user_id}",
@@ -49,7 +44,7 @@ def update_user(
     datos: UsuarioUpdate,
     db: sqlite3.Connection = Depends(get_db)
 ):
-    try:
+   
         return user_service.update_user(
             db=db,
             user_id=user_id,
@@ -57,31 +52,21 @@ def update_user(
             email=datos.email
         )
 
-    except UserNotFoundError:
-        raise HTTPException(
-            status_code=404,
-            detail="Usuario no encontrado"
-        )
-
+   
 @router.delete("/users/{user_id}",
                status_code=status.HTTP_204_NO_CONTENT)
 def delete_user(
     user_id: int,
     db: sqlite3.Connection = Depends(get_db)
 ):
-    try:
+   
         user_service.delete_user(
             db=db,
             user_id=user_id
         )
         
 
-    except UserNotFoundError:
-        raise HTTPException(
-            status_code=404,
-            detail="Usuario no encontrado"
-        )
-
+   
 
 
 #registro de usuario
@@ -93,7 +78,7 @@ def register(
     db: sqlite3.Connection = Depends(get_db)
 ):
 
-    try:
+  
 
         register_user(
             usuario,
@@ -104,12 +89,7 @@ def register(
             "mensaje": "Usuario registrado"
         }
 
-    except UserAlreadyExistsError:
-
-        return {
-            "mensaje": "El correo electrónico ya está registrado"
-        }
-
+    
 
 
 #rura protegida que requiere autenticación

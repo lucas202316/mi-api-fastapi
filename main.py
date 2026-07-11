@@ -21,6 +21,11 @@ app.add_exception_handler(
     UserNotFoundError,
     user_not_found_handler
 )
+app.add_exception_handler(
+    UserAlreadyExistsError,
+    user_already_exists_handler
+)
+
 
 
 #registra las rutas de autenticación y usuarios en la aplicación FastAPI
