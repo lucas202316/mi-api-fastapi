@@ -114,3 +114,19 @@ def delete_user(db: sqlite3.Connection, user_id: int):
     return cursor.rowcount
 
 
+def get_user_by_email(
+    db: sqlite3.Connection,
+    email: str
+):
+    cursor = db.cursor()
+
+    cursor.execute(
+        """
+        SELECT *
+        FROM usuarios
+        WHERE email = ?
+        """,
+        (email,)
+    )
+
+    return cursor.fetchone()

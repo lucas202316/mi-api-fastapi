@@ -8,9 +8,14 @@ from fastapi import FastAPI
 from routes.auth import router as auth_router
 from routes.users import router as users_router
 from handlers import user_already_exists_handler
-from handlers import user_not_found_handler
+from handlers import (
+    user_not_found_handler,
+    user_already_exists_handler,
+    invalid_credentials_handler,
+    authentication_error_handler
+)
 from exceptions import UserNotFoundError
-from exceptions import UserAlreadyExistsError
+from exceptions import UserAlreadyExistsError,  AuthenticationError
 
 #constantes
 
@@ -27,6 +32,10 @@ app.add_exception_handler(
     user_already_exists_handler
 )
 
+app.add_exception_handler(
+    AuthenticationError,
+    authentication_error_handler
+)
 
 
 #registra las rutas de autenticación y usuarios en la aplicación FastAPI

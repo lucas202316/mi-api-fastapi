@@ -9,10 +9,10 @@ from schemas import MessageResponse, Usuario, UsuarioResponse, UsuarioUpdate
 
 from database import get_db
 import sqlite3
-from exceptions import UserAlreadyExistsError
+
 
 from dependencies import get_current_user
-from auth import hash_password
+
 from services import user_service
 
 router = APIRouter()
@@ -80,10 +80,10 @@ def register(
 
   
 
-        return register_user(#en auth_service.py
+        return register(#en auth_service.py
             usuario,
             db
-        ) + "mensaje: Usuario registrado"
+        ) 
         
 
     
