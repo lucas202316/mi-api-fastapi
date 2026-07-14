@@ -9,10 +9,14 @@ def register_user(usuario, db):
 
     password_hash = hash_password(usuario.password)
 
-    create_user(
+    create_user( #en repositories.user_repository
         usuario,
         password_hash,
         db
     )
-
+    return create_user(
+    usuario,
+    password_hash,
+    db
+)
 

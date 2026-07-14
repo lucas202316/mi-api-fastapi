@@ -27,10 +27,15 @@ def create_user(
         )
 
         db.commit()
+        return get_user_by_id(
+            db,
+            cursor.lastrowid
+        )
 
     except sqlite3.IntegrityError:
 
-        raise UserAlreadyExistsError()
+        raise UserAlreadyExistsError()#traducción de errores: Error de infraestructura → Error de negocio
+
 
 def get_all_users(db: sqlite3.Connection):
     cursor = db.cursor()

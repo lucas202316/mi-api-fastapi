@@ -22,7 +22,7 @@ router = APIRouter()
 def get_users(
     db: sqlite3.Connection = Depends(get_db)
 ):
-    return user_service.get_all_users(db)
+    return user_service.get_all_users(db)#el trabajo del endpoint es delegar
 
 #Ahora agregamos el nuevo endpoint.
 @router.get("/users/{user_id}",response_model=UsuarioResponse)
@@ -80,14 +80,11 @@ def register(
 
   
 
-        register_user(
+        return register_user(#en auth_service.py
             usuario,
             db
-        )
-
-        return {
-            "mensaje": "Usuario registrado"
-        }
+        ) + "mensaje: Usuario registrado"
+        
 
     
 
