@@ -1,23 +1,31 @@
-from exceptions import UserAlreadyExistsError
-from schemas import Usuario
-from auth import hash_password
-from repositories.user_repository import create_user
 
-from repositories.user_repository import get_user_by_email
-from auth import verify_password, create_access_token
-from fastapi import HTTPException
+import sqlite3
+
+from auth import (
+    hash_password,
+    verify_password,
+    create_access_token
+)
 
 from exceptions import AuthenticationError
 
+from repositories.user_repository import (
+    create_user,
+    get_user_by_email
+)
 
-def register(usuario: Usuario,
+from schemas import Usuario, Login
+
+def register_user(usuario: Usuario,
             db: sqlite3.Connection):
 
     password_hash = hash_password(usuario.password)
+    rol = "user"
 
     return create_user(
     usuario,
     password_hash,
+    rol,
     db
 )
 
@@ -36,14 +44,16 @@ def login(
     password_guardada = usuario["password"]
 
     if not verify_password(
-    datos.password,
-    password_guardada
+        datos.password,
+        password_guardada
 ):
         raise AuthenticationError()
 
     token = create_access_token(
-        usuario["id"]
-    )
+        usuario["id"],
+        usuario["rol"]
+)
+
 
     return {
         "access_token": token,

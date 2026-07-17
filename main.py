@@ -11,7 +11,6 @@ from handlers import user_already_exists_handler
 from handlers import (
     user_not_found_handler,
     user_already_exists_handler,
-    invalid_credentials_handler,
     authentication_error_handler
 )
 from exceptions import UserNotFoundError
@@ -20,7 +19,7 @@ from exceptions import UserAlreadyExistsError,  AuthenticationError
 #constantes
 
 
-app = FastAPI()
+app = FastAPI()#objeto de la clase FastAPI, que representa la aplicación web y se utiliza para definir rutas, manejar solicitudes y respuestas, y configurar la aplicación.
 
 #registrar el manejador de excepciones personalizado para UserNotFoundError
 app.add_exception_handler(
@@ -39,6 +38,7 @@ app.add_exception_handler(
 
 
 #registra las rutas de autenticación y usuarios en la aplicación FastAPI
+##Se registra el router de autenticación en la aplicación FastAPI. Esto permite que las rutas definidas en auth_router estén disponibles en la aplicación principal.
 app.include_router(auth_router)
 app.include_router(users_router)
 

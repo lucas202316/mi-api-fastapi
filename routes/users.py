@@ -71,7 +71,7 @@ def delete_user(
 
 #registro de usuario
 @router.post("/register",
-             response_model=MessageResponse,
+             response_model=UsuarioResponse,
              status_code=status.HTTP_201_CREATED)
 def register(
     usuario: Usuario,
@@ -80,7 +80,7 @@ def register(
 
   
 
-        return register(#en auth_service.py
+        return register_user(#en auth_service.py
             usuario,
             db
         ) 

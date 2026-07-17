@@ -21,6 +21,7 @@ class UsuarioUpdate(UsuarioBase):
 #response model for user data
 class UsuarioResponse(UsuarioBase):
     id: int
+    rol: str
 
 
 class Login(BaseModel):
@@ -35,3 +36,6 @@ class Token(BaseModel):
 
 class MessageResponse(BaseModel):
     mensaje: str
+
+
+

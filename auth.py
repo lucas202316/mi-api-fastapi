@@ -25,9 +25,18 @@ def verify_password(password: str, password_hash: str) -> bool:
     )
 
 
-def create_access_token(user_id: int) -> str:
+def create_access_token(
+    user_id: int,
+    rol: str
+) -> str:
+
+    payload = {
+        "sub": str(user_id),
+        "rol": rol
+    }
+
     return jwt.encode(
-        {"id": user_id},
+        payload,
         SECRET_KEY,
         algorithm=ALGORITHM
     )
